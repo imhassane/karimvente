@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'main',
     'shop',
     'accounts',
-    'administration'
+    'administration',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -120,8 +121,8 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
+# Static files (CSS, JavaScripAmazonS3FullAccesses)
+# https://docs.djangoproject.cAmazonS3FullAccess.0/howto/static-files/
 
 STATIC_URL = '/static/'
 MEDIA_URL = "/media/"
@@ -134,6 +135,8 @@ if DEBUG is False:
     
     ALLOWED_HOSTS += ['karimvente.herokuapp.com']
 
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
     AWS_S3_OBJECT_PARAMETERS = {
@@ -141,6 +144,7 @@ if DEBUG is False:
     }
     AWS_LOCATION = 'static'
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
