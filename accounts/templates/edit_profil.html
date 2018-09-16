@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edition du profil
+{% endblock title %}
+
+{% block main %}
+
+<div class="container">
+
+    <h2>Paramètres</h2>
+
+
+    <form id="edit-profil-form" method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <fieldset class="uk-fieldset">
+
+            <legend class="uk-legend">Compte</legend>
+
+            <div class="uk-margin uk-child-width-1-2@m uk-child-width-1-1@s uk-flex-center" uk-grid>
+                <div>
+                    <div class="form-group">
+                        <label class="label" for="">Entrez votre prénom</label>
+                        {{ user_form.first_name }}
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label class="label" for="">Entrez votre nom</label>
+                        {{ user_form.last_name }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group uk-margin">
+                <label class="label" for="">Entrez votre adresse email</label>
+                {{ user_form.email }}
+            </div>
+
+            <div class="form-group uk-margin">
+                <label class="label" for="">Image de profil</label><br>
+                <div uk-form-custom>
+                    {{ profil_form.avatar }}
+                    <button class="uk-button uk-button-default" type="button" tabindex="-1">Choisissez une image</button>
+                </div>
+            </div>
+
+            <div class="form-group uk-margin">
+                <input id="submit" type="submit" class="uk-button uk-button-default" value="Enregistrer les modifications" />
+                <a href="#modal" uk-toggle href="#" class="uk-button uk-button-danger">Désactiver mon compte</a>
+            </div>
+
+        </fieldset>
+    </form>
+
+</div>
+
+<div id="modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-padding">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">Désactivation de votre compte</h2>
+        <p class="uk-padding">
+            En continuant, votre compte sera désactivé et pas supprimé pour des raisons de cohérence dans notre base de donnée.
+            Vous n'aurez plus accès à celui-ci à moins de faire une demande de réactivation.
+        </p>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+            <button id="delete-link" class="uk-button uk-button-danger" type="button">Désactiver</button>
+        </p>
+    </div>
+</div>
+
+{% endblock main %}
+
+{% block script %}
+
+<script>
+    $('#delete-link').click(e => {
+        e.preventDefault()
+
+        $.ajax({
+            url: "{% url 'accounts:delete_profil' %}",
+            success: data => {
+                UIkit.notification({
+                    message: "Votre compte a été bien modifié",
+                    timeout: 2000,
+                    status: "primary"
+                })
+            },
+            error: error => {
+                UIkit.notification({
+                    message: "Une erreur s'est produite lors de la modification de votre compte",
+                    timeout: 2000,
+                    status: "error"
+                })
+            }
+        })
+        
+    })
+</script>
+
+{% endblock script %}

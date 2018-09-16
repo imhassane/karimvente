@@ -1,0 +1,4 @@
+medias/
+static-files/
+*.pyc
+nodes_modules/

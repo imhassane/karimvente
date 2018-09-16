@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+
+<div class="container">
+
+    <form action="" method="post" class="uk-panel uk-padding">
+
+        {% csrf_token %}
+
+        <fieldset class="uk-fieldset">
+
+            <legend class="uk-legend">Connexion</legend>
+
+            <div class="uk-margin">
+
+                <label class="label" for="">Entrez votre nom d'utilisateur</label>
+                
+                <div>
+                    <div class="uk-width-1-1 uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon:user"></span>
+                        {{ form.username }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+
+                <label class="label" for="">Entrez votre mot de passe</label>
+                <div>
+                    <div class="uk-width-1-1 uk-inline">
+                         <span class="uk-form-icon" uk-icon="icon:lock"></span>
+                        {{ form.password }}
+                    </div>
+                </div>
+        
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Se connecter" class="uk-button uk-button-secondary">
+            </div>
+        
+        </fieldset>
+
+    </form>
+
+    <p class="uk-text-meta">
+        Vous n'avez pas encore de compte ?
+        <a href="{% url 'accounts:signup' %}">Créer un compte dès maintenant</a>
+    </p>
+
+</div>
+
+{% endblock main %}

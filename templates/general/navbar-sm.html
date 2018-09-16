@@ -1,0 +1,29 @@
+<div class="uk-offcanvas-content uk-hidden@s">
+  
+    <div class="uk-navbar-left">
+        <a class="uk-navbar-toggle" uk-toggle="target: #offcanvas-nav-primary" uk-navbar-toggle-icon href="#"></a>
+     </div>
+
+    <div id="offcanvas-nav-primary" uk-offcanvas="mode: reveal; overlay: true">
+        <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+
+            {% include "forms/search.html" %}
+    
+            <ul class="uk-nav uk-nav-default">
+                <li class="uk-active"><a href="{% url 'main:home' %}">Accueil</a></li>
+                
+                <li class="uk-nav-header">Nos services</li>
+                <li><a href="{% url 'main:products' %}"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Nos produits</a></li>
+                <li><a href="{% url 'main:categories' %}"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Catégories</a></li>
+                
+                <li class="uk-nav-header">Authentification</li>
+                <li><a href="{% url 'accounts:login' %}"><span class="uk-margin-small-right" uk-icon="icon: user"></span> Accès à votre compte</a></li>
+                <li><a href="{% url 'accounts:signup' %}"><span class="uk-margin-small-right" uk-icon="icon: user"></span> Nouveau compte</a></li>
+                
+                <li class="uk-nav-header">Contact</li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: mail"></span> Service client</a></li>
+            </ul>
+    
+        </div>
+    </div>
+</div>

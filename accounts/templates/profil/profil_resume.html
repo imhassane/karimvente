@@ -1,0 +1,79 @@
+<div class="uk-panel uk-panel-body" uk-grid>
+
+    <div>
+        <div>
+            <img width="150" src="{{ profile.avatar.url }}" alt="{{ user.username }}" />
+        </div>
+    </div>
+
+    <div>
+
+        <div>
+
+            <h2 class="uk-h2">Informations personnelles</h2>
+            <div>
+
+                <p>
+                    <span class="uk-text-meta">Nom d'utilisateur:</span>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" value="{{ user.username }}" type="text" placeholder="Amount of money">
+                        </p>
+                    </div>
+                </p>
+                <p>
+                    <span class="uk-text-meta">Prénom:</span>
+                    <form action="" method="get">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input id="first_name" name="first_name" class="input" value="{{ user.first_name }}" type="text" placeholder="Amount of money">
+                            </p>
+                            <p class="control">
+                                <button type="submit" id="change_first_name" class="button is-info">
+                                    Changer
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </p>
+                <p>
+                    <span class="uk-text-meta">Nom:</span>
+                    <form action="" method="get">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input id="last_name" class="input" value="{{ user.last_name }}" type="text" placeholder="Amount of money">
+                            </p>
+                            <p class="control">
+                                <button type="submit" id="change_last_name" class="button is-info">
+                                    Changer
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                    
+                </p>
+                <p>
+                    <span class="uk-text-meta">Adresse email</span>
+                    <div class="field has-addons">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <p class="control">
+                                <input class="input" value="{{ user.email }}" type="text" placeholder="Amount of money">
+                            </p>
+                        </form>
+                    </div>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+
+    </div>
+
+</div>

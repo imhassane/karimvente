@@ -1,0 +1,205 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %} {{ product.name }} {% endblock title %}
+
+{% block main %}
+
+<div class="uk-container">
+
+
+    <div>
+        <h2>{{ product.name }} - [ID: {{ product.pk }}]</h2>
+        <span class="uk-text-meta">Mise à jour le {{ product.updated_at|date:"j N o à H:i" }}</span>
+    </div>
+
+    <div uk-grid>
+
+        <div class="uk-padding uk-margin uk-position-relative uk-visible-toggle uk-light uk-width-2-3@m uk-width-1-1@s" uk-slideshow>
+            <ul class="uk-slideshow-items uk-margin">
+                {% for img in pictures %}
+                <li>
+                    <img class="" src="{{ img.url }}" alt="{{ product.name }}" uk-cover/>
+                </li>
+                {% endfor %}
+            </ul>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+            <a id="like" class="uk-background-secondary uk-padding uk-margin">
+                <span uk-icon="icon: heart"></span>
+                <span class="uk-hidden-hover">
+                    <span id="like-number">{{ product.like }}</span> apprécie{{ product.like|pluralize:"nt"}}</span>
+            </a>
+        
+        </div>
+
+        <div class="uk-width-1-3@m uk-width-1-1@s uk-margin uk-padding">
+
+            <div>
+                <h3>Informations importantes</h3>
+
+                <div class="row">
+                    <div class="col-6">
+                        <span class="label">Prix</span>
+                        <p>{{ product.price }} €</p>
+                    </div>
+                    <div class="col-6">
+                        <span class="label">Adresse</span>
+                        <p>{{ product.address }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <span class="label">Ville</span>
+                        <p>{{ product.city }}</p>
+                    </div>
+                    <div class="col-6">
+                        <span class="label">Disponibilité</span>
+                        <p>Le {{ product.availability }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <p>
+                        {% if product.quantity > 0 %}
+                        <span class="uk-label">Disponible en stock</span>
+                        {% else %}
+                        <span class="uk-label uk-label-danger">Ce produit n'est plus disponible</span>
+                        {% endif %}
+                    </p>
+                    {% if product.quantity > 0 %}
+                    <div>
+                        <a id="add-to-bucket" href="#" class="uk-button uk-button-secondary">Commander ce produit</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="uk-margin">
+                <h4>Quelques images</h4>
+
+                <div class="uk-grid-match uk-grid-small uk-child-width-1-3" uk-grid uk-lightbox="animation: fade">
+
+                    {% for img in pictures %}
+
+                    <div>
+
+                        <a href="{{ img.url }}" class="uk-inline" data-caption="{{ product.name }}">
+                            <img src="{{ img.url }}" alt="{{ product.name }}" />
+                        </a>
+
+                    </div>
+                    
+                    {% empty %}
+                        Aucune image disponible pour ce produit
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="uk-margin uk-padding">
+        <h3>Description du produit</h3>
+        <p>
+            {% if product.description != '' %}
+                {{ product.description }}
+            {% else %}
+                Aucun commentaire n'a été ajouté pour ce produit
+            {% endif %}
+        </p>
+        <div class="uk-margin">
+            <h5>Dimensions du produit</h5>
+            <p>
+                <span class="uk-label">Note</span>
+                Les mesures données sont exprimées en mètres.
+            </p>
+            <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
+                <thead>
+                    <tr>
+                        <th>Longeur</th>
+                        <th>Largeur</th>
+                        <th>Hauteur</th>
+                        <th>Rayon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ product.length }}</td>
+                        <td>{{ product.width }}</td>
+                        <td>{{ product.height }}</td>
+                        <td>{{ product.ray }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if product.quantity > 0 %}
+
+    <div class="uk-margin uk-padding">
+        <h3>Contactez-nous</h3>
+        <p class="uk-margin">
+            Si le produit vous intéresse, veuillez nous contacter, <br>
+            Nous faisons de notre mieux pour être disponible tout le temps. <br>
+            Veuillez nous appeler sur le numéro suivant.
+
+            <p class="form-control has-text-centered">
+                <span uk-icon="icon: receiver"></span>
+                +33 6 16 55 29 34
+            </p>
+        </p>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock main %}
+
+{% block script %}
+<script>
+
+    $('#add-to-bucket').click(e => {
+        e.preventDefault()
+        $.ajax({
+            url: "{% url 'shop:add_to_bucket' product.pk %}",
+            success: data => {
+                UIkit.notification({
+                    message: "Votre commande a été ajoutée au panier",
+                    timeout: 2000,
+                    status: "primary"
+                })
+            },
+            error: (error) => {
+                UIkit.notification({
+                    message: "L'ajout de votre commande a échoué",
+                    timeout: 2000,
+                    status: "danger"
+                })
+            }
+        })
+    })
+        
+
+    $('#like').click(e => {
+        $.ajax({
+            url: '/like/product/{{ product.slug }}/',
+            success: data => {
+                $('#like-number').text(data.like)
+            },
+            error: error => {
+                alert(error)
+                $('#like-number').text("erreur")
+            }
+        })
+    })
+
+</script>
+{% endblock script %}

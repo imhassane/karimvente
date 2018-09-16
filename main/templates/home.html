@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<div class="uk-padding-remove">
+
+    <section class="uk-section uk-section-muted">
+        <h1 class="uk-text-center uk-text-middle my-title">Karim Vente</h1>
+        <p class="uk-text-center uk-h4 uk-text-lead">
+            Nous vous proposons des produits adaptés à vos besoins et à votre porte-monnaie.
+        </p>
+    </section>
+
+    <section class="uk-section uk-section-large uk-section-muted" uk-slideshow="min-width: 90%; animation: fade; autoplay: true">
+        
+        <div class="uk-position-relative uk-visible-toggle uk-light">
+            <ul class="uk-slideshow-items" uk-height-viewport="offset-top: 0; offset-bottom: 30">
+                {% for img in covers %}
+                <li class="uk-position-center">
+                    <div class="uk-inline">
+                        <img src="{{ img.url }}" alt="{{ img.url }}" />
+                        <div class="uk-overlay-primary uk-position-cover"></div>
+                        <div class="uk-overlay uk-light uk-position-bottom uk-text-center">
+                            <h3 class="uk-margin-remove">{{ img.text }}</h3>
+                            <p class="uk-margin-remove">{{ img.description }}</p>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+        
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+        </div>
+
+        <ul class="uk-slideshow-nav uk-dotnav uk-flex-center uk-margin"></ul>
+    </section>
+
+    <section class="uk-section uk-section-muted uk-text-center uk-margin-remove uk-width-1-1" uk-scrollspy="cls: uk-animation-slide-left; repeat: true">
+
+        <div class="uk-container">
+            <h3 class="uk-h1 my-title">Nos produits</h3>
+            <p class="uk-text-lead">
+                Nous vous proposons des produits de qualité et à des prix raisonnables<br/>
+            </p>
+
+            <div class="uk-flex-center uk-child-width-1-2 uk-grid-match uk-grid-small" uk-grid>
+                {% for category in categories %}
+                <div>
+                        <div class="uk-inline">
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}" />
+                            <div class="uk-overlay-primary uk-position-cover"></div>
+                            <div class="uk-overlay uk-light uk-position-bottom">
+                                <h3 class="">{{ category.name }} <span class="uk-badge">{{ category.products.count }}</span></h3>
+                                <p class="">{{ category.description }}</p>
+                                <a href="{{ category.get_absolute_url }}" class="uk-button uk-button-default">Voir cette catégorie</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section>
+    <section class="uk-width-large-1-1 uk-section uk-text-center uk-section-secondary uk-padding" uk-scrollspy="cls: uk-animation-slide-right; repeat: true">
+        <div class="uk-container">
+            <h3 class="uk-h1 my-title">Quelques témoignages</h3>
+            <p class="uk-text-lead">
+                Quelques témoignages de personnes ayant acheté nos produits
+            </p>
+            <div class="uk-flex-center uk-child-width-1-2 uk-grid-match uk-grid-small" uk-grid>
+                    {% for witness in witnesses %}
+                    <div>
+                            <div class="uk-inline">
+                                <img src="{{ witness.avatar.url }}" alt="{{ witness.name }}" />
+                                <div class="uk-overlay-primary uk-position-cover"></div>
+                                <div class="uk-overlay uk-light uk-position-bottom">
+                                    <h3 class="">{{ witness.author }} </h3>
+                                    <p class="">{{ witness.content }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </section>
+
+    </div>
+
+</div>
+
+{% endblock main %}

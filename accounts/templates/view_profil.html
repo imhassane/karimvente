@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ user.username }}
+{% endblock title %}
+
+{% block main %}
+
+<div>
+
+    {% include "profil/profil_resume.html" %}
+
+
+</div>
+
+{% endblock main %}
+
+{% block script %}
+<script>
+
+    $('#change_first_name').click(e => {
+        e.preventDefault()
+
+        $.ajax({
+            url: `{% url 'accounts:change_first_name' %}?first_name=${$('#first_name').val()}`,
+            success: data => {
+                $('#first_name').text(data.first_name)
+            },
+            error: error => {
+                $('#change_first_name').removeClass('is-info')
+                $('#change_first_name').addClass('is-warning')
+            }
+        })
+    })
+
+    $('#change_last_name').click(e => {
+        e.preventDefault()
+
+        $.ajax({
+            url: `{% url 'accounts:change_last_name' %}?last_name=${$('#last_name').val()}`,
+            success: data => {
+                $('#last_name').text(data.last_name)
+            },
+            error: error => {
+                $('#change_last_name').removeClass('is-info')
+                $('#change_last_name').addClass('is-warning')
+            }
+        })
+    })
+
+</script>
+{% endblock script %}

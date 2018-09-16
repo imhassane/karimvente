@@ -1,0 +1,43 @@
+<div class="nav-overlay uk-navbar-right">
+    <ul class="uk-navbar-nav">
+        <li>
+            <a class="uk-navbar-toggle" uk-search-icon uk-toggle href="#modal-full"></a>
+        </li>
+        <li>
+            <a href="{% url 'shop:bucket' %}">
+                <span uk-icon="icon: cart "></span>
+                <span class="uk-badge" id="shop-count">{{ shop_count }}</span>
+            </a>
+        </li>
+        {% if user.is_authenticated %}
+        
+        <li>
+            <a href=""><span uk-icon="icon: user"></span></a>
+            <div uk-dropdown="pos: left-bottom">
+                <ul class="uk-nav uk-dropdown-nav">
+                    <li class="uk-nav-header">Mon compte</li>
+                    <li><a href="{% url 'accounts:view_profil' %}">Voir mon profil</a></li>
+                    <li><a href="{% url 'accounts:edit_profil' %}">Paramètres</a></li>
+                    <li class="uk-nav-divider"></li>
+                    {% if user.is_staff %}
+                    <li class="uk-nav-header">Administration</li>
+                    <li><a href="{% url 'administration:adminhome' %}">Gérer les produits</a></li>
+                    <li><a href="{% url 'shop:show_buckets' %}">Gérer les commandes</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'accounts:signout' %}">Déconnexion</a></li>
+                </ul>
+            </div>
+        </li>
+        
+        {% endif %}
+    </ul>
+</div>
+
+<div id="modal-full" class="uk-modal-full uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
+        <button class="uk-modal-close-full" type="button" uk-close></button>
+        <form action="{% url 'main:search' %}" class="uk-search uk-search-large">
+            <input class="uk-search-input uk-text-center" name="q" type="search" placeholder="Rechercher..." autofocus>
+        </form>
+    </div>
+</div>

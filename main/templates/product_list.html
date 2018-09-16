@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title  %} Nos produits {% endblock title  %}
+
+{% block main %}
+
+<div uk-filter="target: .js-filter" class="uk-margin">
+
+    <h1 class="uk-h1 my-title uk-text-center uk-padding">Nos produits</h1>
+
+    {% if datas|length > 0 %}
+
+        <ul class="uk-subnav uk-subnav-pill sort">
+
+            <li uk-filter-control><a href="#">Tout</a></li>
+            {% for key in datas.keys %}
+            <li uk-filter-control="[data-category='{{ key }}']"><a href="#">{{ key }}</a></li>
+            {% endfor %}
+
+        </ul>
+
+        <ul class="uk-subnav uk-subnav-pill sort">
+            <li uk-filter-control="sort: data-price; order: asc"><a href="#">Prix croissant</a></li>
+            <li uk-filter-control="sort: data-price; order: desc"><a href="#">Prix décroissant</a></li>
+        </ul>
+
+        <ul class="uk-subnav uk-subnav-pill sort">
+            <li uk-filter-control="sort: data-pubdate; order: asc"><a href="#">Récents</a></li>
+            <li uk-filter-control="sort: data-pubdate; order: desc"><a href="#">Anciens</a></li>
+        </ul>
+
+        <ul class="js-filter uk-text-center" uk-grid="parallax: 15; masonry: true" uk-scrollspy="cls: uk-animation-fade; target: li > div > .uk-card; delay: 150; repeat: true">
+
+            {% for key, value in datas.items %}
+
+                {% for data in value %}
+                <li data-pubdate="{{ data.updated_at }}" data-category="{{ key }}" data-price="{{ data.price }}}">
+                    <div>   
+                        <div class="uk-card uk-card-hover uk-margin">
+                            <div class="uk-card-media-top uk-cover-container">
+                                <img src="{{ data.image.url }}" alt="{{ data.name }}" uk-cover/>
+                                <canvas width="" height=""></canvas>
+                            </div>
+                            <div>
+                                <div class="uk-card-body">
+                                    <p class="uk-card-title">{{ data.name }}</p>
+                                    <a class="uk-position-absolute uk-transform-center" style="left: 20%; top: 50%" href="#" uk-marker>Prix: {{ data.price }}</a>
+                                    <a href="{{ data.get_absolute_url }}" class="uk-button uk-button-text">Voir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+
+            {% endfor %}
+
+        </ul>
+        {% else %}
+        <p class="uk-text-center uk-text-lead">
+            Nous n'avons aucun produit à vous proposer pour le moment
+        </p>
+        {% endif %}
+</div>
+
+{% endblock main %}
+
+{% block script %}
+<script>
+    $('.sort li a').click(e => {
+        $(this).toggleClass('uk-active')
+    })
+</script>
+{% endblock script %}

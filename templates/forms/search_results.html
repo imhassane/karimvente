@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block main %}
+
+<div>
+
+    <div uk-grid="masonry: true">
+        {% for category in categories %}
+
+            <div>
+        
+                <div class="uk-tile uk-tile-secondary uk-padding">
+
+                    <a class="" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+            <div class="uk-width-1-1">
+                <div>
+                    <p class="uk-alert uk-alert-primary">
+                        Aucune catégorie ne correspond à votre recherche
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div uk-grid uk-scrollspy="cls: uk-animation-fade; target: > div > .uk-card; delay: 100; repeat: true">
+    {% for product in products %}
+        <div class="uk-margin">
+            <div class="uk-tile uk-tile-muted uk-inline">
+
+                <img src="{{ product.image.url }}" alt="" />
+                <div class="uk-overlay uk-overlay-primary uk-position-bottom uk-flex uk-flex-between">
+                    <div>{{ product.name }}</div>
+                    <div>
+                        <a href="{{ product.get_absolute_url }}">Voir le produit</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    {% empty %}
+        <div class="uk-width-1-1">
+            <div class="uk-alert uk-alert-primary">Aucun produit ne correspond à votre recherce</div>
+        </div>
+    {% endfor %}
+</div>
+
+</div>
+
+{% endblock main %}
