@@ -144,9 +144,9 @@ if DEBUG is False:
     }
     AWS_LOCATION = 'static'
 
-    MEDIA_URL = AWS_S3_CUSTOM_DOMAIN + '/media/'
+    MEDIA_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + '/media/'
     MEDIA_ROOT = MEDIA_URL
-    
+
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
