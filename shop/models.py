@@ -1,5 +1,6 @@
 from django.db import models
 from main.models import Product
+from django.shortcuts import reverse
 
 
 # Create your models here.
@@ -25,3 +26,6 @@ class Bucket(Base):
     validated = models.BooleanField(default=False)
     sent = models.BooleanField(default=False)
     order = models.ManyToManyField(Order, related_name='orders')
+
+    def json_details(self):
+        return reverse('shop:order_details', kwargs={'id': self.pk})

@@ -77,7 +77,7 @@ def validate_order(request):
             del request.session['bucket']
 
             context['message'] = "Votre commande a été enregistrée, nous reviendrons vers vous pour entamer la démarche nécessaire"
-    
+            context['code'] = bucket.pk
     except:
         
         # On va afficher un message d' erreur.
@@ -116,3 +116,48 @@ def show_orders(request):
     context['total_buckets'] = buckets.count()
 
     return render(request, "show_buckets.html", context)
+
+@auth.user_passes_test(decorators.user_is_admin)
+def validate(request, id):
+
+    pass
+
+
+@auth.user_passes_test(decorators.user_is_admin)
+def cancel(request, id):
+
+    # On récupère la commande
+    order = _g(Order, pk=id)
+
+    # On la suppprime
+    #order.delete()
+
+    return JsonResponse({"message": "La commande n°%d a été annulée" % id})
+
+
+@auth.user_passes_test(decorators.user_is_admin)
+def order_details(request, id):
+
+    # On récupère la commande
+    bucket = _g(Bucket, pk=id)
+    orders = []
+
+    for order in Order.objects.all():
+
+        if bucket in order.orders.all():
+            orders.append(order)
+
+
+    products = {}
+    total_value = 0
+
+    for key, order in enumerate(orders):
+        products[key] = {
+            "name": order.product.name,
+            "price": order.product.price
+        }
+
+        total_value += order.product.price
+
+    return JsonResponse({"id": id, "products": products, "price": total_value})
+

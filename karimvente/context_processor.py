@@ -15,3 +15,10 @@ def shop_info(request):
     return {
         'shop_count': count
     }
+
+def get_contact(request):
+
+    return {
+        'confo_telephone': "+213 551 46 20 06",
+        'confo_address': "02 Cité Tchilel, Alger"
+    }

@@ -9,8 +9,8 @@ urlpatterns = [
     path('', include('main.urls')),
     path('accounts/', include('accounts.urls')),
     path('shop/', include('shop.urls')),
-    path('administration/', include('administration.urls'))
-    
+    path('administration/', include('administration.urls')),
+    path('contact/', include('contact.urls'))
 ]
 
 if settings.DEBUG:

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-
+Liste des commandes
 {% endblock title %}
 
 {% block main %}
@@ -15,7 +15,7 @@
         Vous avez {{ total_buckets }} commandes
     </p>
 
-    <div class="uk-child-width-1-2@m uk-child-width-1-1@s" uk-grid>
+    <div class="uk-child-width-1-2@m uk-child-width-1-1@s" id="buckets-list" uk-grid>
         {% for bucket in buckets %}
 
         <div>
@@ -27,8 +27,9 @@
                     <li class="uk-text-meta">Ajoutée le {{ bucket.created_at }}</li>
                 </ul>
                 <div class="row">
-                    <a href="" class="col-md-6 col-sm-12 uk-button uk-button-primary">Validez la commande</a>
-                    <a href="" class="col-md-6 col-sm-12 uk-button uk-button-danger">Refusez la commande</a>  
+                    <a href="{% url 'shop:order_details' bucket.pk %}" class="col-md-4 col-sm-12 uk-button uk-button-default">Détails de la commande</a>
+                    <a href="" class="col-md-4 col-sm-12 uk-button uk-button-primary">Validez la commande</a>
+                    <a href="" class="col-md-4 col-sm-12 uk-button uk-button-danger">Refusez la commande</a>  
                 </div>
                 
             </div>
@@ -40,4 +41,60 @@
 
 </div>
 
+
 {% endblock main %}
+
+{% block script %}
+<script>
+
+    $('#modal').hide()
+
+    $('#buckets-list a').click(e => {
+        e.preventDefault()
+        const url = e.target.getAttribute('href')
+        $.ajax({
+            url,
+            success: data => {
+
+                let html = `
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Détails de la commande n°${data.id}</h2>
+                    </div>
+                    <div class='uk-modal-body' uk-overflow-auto>
+                        <strong>La valeur totale de la commande est: ${data.price}€</strong>
+                    `
+                Object.keys(data.products).map(key => {
+                    const value = data.products[key]
+
+                    html += `
+                        <div class=''>
+                            <p>
+                                Nom du produit: <strong>${value.name}</strong>
+                            </p>
+                            <p>
+                                Prix: <strong>${value.price}</strong>
+                            </p>
+                        </div>
+                        <hr />
+                    `
+                })
+
+                html += `
+                    </div>
+                    <div class='uk-modal-footer uk-text-right'>
+                        <a href='#' class='uk-button uk-button-danger'>Annuler la commande</a>
+                        <a href='#' class='uk-button uk-button-primary'>Valider la commande</a>
+                    </div>
+                `
+
+                UIkit.modal.dialog(html)
+            },
+            error: error => {
+                alert("Une erreur s'est produite")
+            }
+        })
+    })
+
+</script>
+{% endblock script %}

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$8uq6()nym-7h1rgg4(q=skrum&9@e)pijmd#x(f#vago576ut'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'shop',
     'accounts',
     'administration',
-    'storages'
+    'storages',
+    'contact'
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'karimvente.context_processor.get_contact'
             ],
         },
     },
@@ -119,6 +121,14 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Configuration de l'envoi de mail.
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'imthassane@gmail.com' 
+EMAIL_HOST_PASSWORD = 'melian1999@'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 
 # Static files (CSS, JavaScripAmazonS3FullAccesses)

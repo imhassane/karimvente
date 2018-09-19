@@ -60,6 +60,32 @@
 
     </div>
 
+    <button id="modal" uk-toggle="target: #offcanvas-reveal" class="uk-button uk-button-default uk-margin-small-right" type="button"></button>
+
+    <!-- This is the modal with the default close button -->
+    <div id="offcanvas-reveal" uk-offcanvas="mode: reveal; overlay: true">
+        <div class="uk-offcanvas-bar">
+    
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+    
+            <h3>Réservation de votre commande</h3>
+    
+            <p>
+                Veuillez nous contacter avec le code #<span id="code"></span> pour valider et reserver votre commande.
+            </p>
+
+            <p class="uk-text-danger">
+                Sans avoir appelé pour confirmer votre commande, <br>
+                il se peut que notre équipe ne la voie pas et que votre commande soit annulée.
+            </p>
+
+            <div class="uk-position-bottom">
+                <a href="{% url 'contact:home' %}" class="uk-button uk-button-default uk-width-1-1 uk-margin-bottom">Contactez-nous</a>
+            </div>
+    
+        </div>
+    </div>
+
 
 </div>
 
@@ -67,6 +93,8 @@
 
 {% block script %}
 <script>
+
+    $('#modal').hide()
 
     $('.del_from_bucket').click(e => {
         e.preventDefault()
@@ -97,7 +125,10 @@
         $.ajax({
             url: "{% url 'shop:validate_bucket' %}",
             success: data => {
-                $('.container').load("{% url 'shop:bucket' %}")
+                if(data.code){
+                    $('#code').text(data.code)
+                    $('#modal').trigger('click')
+                }
             },
             error: error => {
 
