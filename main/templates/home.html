@@ -45,16 +45,16 @@
                 Nous vous proposons des produits de qualité et à des prix raisonnables<br/>
             </p>
 
-            <div class="uk-flex-center uk-child-width-1-2 uk-grid-match uk-grid-small" uk-grid>
+            <div class="uk-flex-center uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match uk-grid-small" uk-grid>
                 {% for category in categories %}
                 <div>
-                        <div class="uk-inline">
+                        <div class="uk-inline uk-overflow-auto">
                             <img src="{{ category.image.url }}" alt="{{ category.name }}" />
                             <div class="uk-overlay-primary uk-position-cover"></div>
                             <div class="uk-overlay uk-light uk-position-bottom">
                                 <h3 class="">{{ category.name }} <span class="uk-badge">{{ category.products.count }}</span></h3>
-                                <p class="">{{ category.description }}</p>
-                                <a href="{{ category.get_absolute_url }}" class="uk-button uk-button-default">Voir cette catégorie</a>
+                                <p class="uk-visible@m">{{ category.description }}</p>
+                                <a href="{{ category.get_absolute_url }}" class="uk-button uk-button-default">Voir</a>
                             </div>
                         </div>
                     </div>

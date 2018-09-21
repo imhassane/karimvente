@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
-from .forms import ProductForm
+from .forms import ProductForm, CategoryForm
 import logging
 
 logger = logging.getLogger(__name__)
@@ -13,7 +13,30 @@ def adminhome(request):
     
     context = {}
 
+    context['is_admin_page'] = True
+
     return render(request, "adminhome.html", context)
+
+def add_category(request):
+
+    context = {}
+
+    form = CategoryForm(request.POST, request.FILES)
+
+    context['form'] = form
+
+    if form.is_valid():
+
+        datas = form.cleaned_data
+
+        name, description = datas['name'], datas['description']
+        image = request.FILES['image']
+
+        category = Category(name=name, description=description)
+        category.slug = slugify(name)
+        category.save()
+
+    return render(request, 'add_category.html', context)
 
 
 def add_product(request):
@@ -39,15 +62,16 @@ def add_product(request):
         product.save()
 
         # On ajoute les catégories.
-        import karim.functions as f
+        import karimvente.functions as f
         categories = f.parse_select_multiple(category)
 
         for cat in categories:
-            _cat = get_object_or_404(Category, name=cat)
+            _cat = get_object_or_404(Category, name__icontains=cat)
             product.category.add(_cat)
         
         # On ajoute les images.
         for key, img in enumerate(pictures):
+            # La première image sera l'image par défaut du produit
             if key == 0:
                 product.image = "products/" + str(img)
 
@@ -55,6 +79,9 @@ def add_product(request):
             pic = Picture(product=product, picture=img)
             pic.save()
             f.handle_upload_file("products", str(img), img)
+    
+    else:
+        context['error'] = True
             
 
 

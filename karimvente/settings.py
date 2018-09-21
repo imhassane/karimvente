@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$8uq6()nym-7h1rgg4(q=skrum&9@e)pijmd#x(f#vago576ut'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'accounts',
     'administration',
     'storages',
-    'contact'
+    'contact',
+    'analytical'
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,11 @@ MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'), )
+
+# Configuration des services analytical
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-1234567-8'
+GOOGLE_ANALYTICS_DISPLAY_ADVERTISING = True
+GOOGLE_ANALYTICS_SITE_SPEED = True
 
 
 if DEBUG is False:

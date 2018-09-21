@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Nouvelle catégorie
+{% endblock title %}
+
+{% block main %}
+
+<div>
+
+    <h1 class="my-title uk-text-center">Ajout d'une nouvelle catégorie</h1>
+
+    <div>
+        {% if error %}
+        <p class="uk-text-danger">Veuillez remplir tous les champs</p>
+        {% else %}
+        {% endif %}
+    </div>
+
+    <form action="#" method="post" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="uk-margin">
+            <label class="label" for="">Titre de la catégorie</label>
+            {{ form.name }}
+        </div>
+
+        <div class="uk-margin">
+            <label class="label" for="">Description de la catégorie</label>
+            {{ form.description }}
+        </div>
+
+        <div class="uk-margin">
+            <label class="label" for="">Image de la catégorie</label>
+            {{ form.image }}
+        </div>
+
+        <input type="submit" class="uk-button uk-button-secondary" value="Ajouter la catégorie" />
+
+
+    </form>
+
+</div>
+
+{% endblock main %}

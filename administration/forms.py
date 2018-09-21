@@ -9,7 +9,13 @@ class ProductForm(forms.Form):
         'placeholder': "Ex: table"
     }))
 
-    category = forms.CharField(max_length=155)
+    category = forms.CharField(widget=forms.SelectMultiple(attrs={
+        'class': 'uk-input'
+    }, choices=(
+        ("Chambres", "Chambres"),
+        ("Salons", "Salons"),
+        ("Terasses", "Terasses")
+    )))
 
     description = forms.CharField(widget=forms.Textarea(attrs={
         'id': 'description',
@@ -35,9 +41,26 @@ class ProductForm(forms.Form):
 
     availability = forms.CharField(widget=forms.DateTimeInput(attrs={
         'class': 'uk-input',
-        'placeholder': "Format: jj/mm/aa hh:mm"
+        'placeholder': "Format: aaaa-mm-jj"
     }))
 
     pictures = forms.FileField(widget=forms.ClearableFileInput(attrs={
         'multiple': True
+    }))
+
+
+class CategoryForm(forms.Form):
+
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'uk-input'
+    }))
+
+    description = forms.CharField(widget=forms.Textarea(attrs={
+        'id': 'description',
+        'class': 'uk-input',
+        "row": "10"
+    }))
+
+    image = forms.FileField(widget=forms.ClearableFileInput(attrs={
+        'class': 'uk-input'
     }))
