@@ -1,8 +1,16 @@
-<div class="uk-offcanvas-content uk-hidden@s">
+<div class="uk-navbar-container uk-offcanvas-content uk-hidden@s" uk-navbar>
   
     <div class="uk-navbar-left">
         <a class="uk-navbar-toggle" uk-toggle="target: #offcanvas-nav-primary" uk-navbar-toggle-icon href="#"></a>
-     </div>
+    </div>
+
+    <div class="uk-navbar-center">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active">
+                <a href="{% url 'main:home' %}" class="my-title">Confo Meubles</a>
+            </li>
+        </ul>
+    </div>
 
     <div id="offcanvas-nav-primary" uk-offcanvas="mode: reveal; overlay: true">
         <div class="uk-offcanvas-bar uk-flex uk-flex-column">
@@ -21,7 +29,7 @@
                 <li><a href="{% url 'accounts:signup' %}"><span class="uk-margin-small-right" uk-icon="icon: user"></span> Nouveau compte</a></li>
                 
                 <li class="uk-nav-header">Contact</li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: mail"></span> Service client</a></li>
+                <li><a href="{% url 'contact:home' %}"><span class="uk-margin-small-right" uk-icon="icon: mail"></span> Service client</a></li>
             </ul>
     
         </div>
