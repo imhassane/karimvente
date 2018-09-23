@@ -25,9 +25,6 @@
         main {
             min-height: 68vh;
         }
-        .my-title {
-            font-family: 'Pacifico';
-        }
     </style>
 
     {% block head %}
@@ -40,16 +37,26 @@
     <title>{% block title %}Bienvenue{% endblock title %}</title>
 </head>
 <body>
-    <div>
-        <header>{% include "general/header.html" %}</header>
+
+    <header>{% include "general/header.html" %}</header>
+    <div class="">
         <div class="">
             {% if user.is_staff and is_admin_page %}
                 {% include "admin/navigation.html" %}
             {% endif %}
             <main class="uk-section uk-section-muted uk-padding">{% block main %}{% endblock main %}</main>
         </div>
-        <footer class="uk-background-secondary">{% include "general/footer.html" %}</footer>
     </div>
+
+    {% if home %}
+    <section class="uk-width-large-1-1 uk-section uk-text-center uk-section-default uk-padding" uk-scrollspy="cls: uk-animation-scale-up; repeat: true">
+        <h1 class="uk-h1 my-title">Où nous trouver ?</h1>
+        <p class="uk-text-lead">Notre entreprise est basée en Algérie où nous exerçons notre activité</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2648.9102470448715!2d-4.4887778842261845!3d48.40066674077897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816bbe5e37f2f2d%3A0x265f6b5ac8d1efa6!2s5+Rue+Bernard+Palissy%2C+29200+Brest!5e0!3m2!1sfr!2sfr!4v1537332271532" class="uk-width-1-1 uk-height-large" frameborder="0" allowfullscreen></iframe>
+    </section>
+    {% endif %}
+    <footer class="uk-background-secondary">{% include "general/footer.html" %}</footer>
+    
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     

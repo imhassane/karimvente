@@ -27,9 +27,9 @@ Liste des commandes
                     <li class="uk-text-meta">Ajoutée le {{ bucket.created_at }}</li>
                 </ul>
                 <div class="row">
-                    <a href="{% url 'shop:order_details' bucket.pk %}" class="col-md-4 col-sm-12 uk-button uk-button-default">Détails de la commande</a>
+                    <a href="{% url 'shop:order_details' bucket.pk %}" class="details col-md-4 col-sm-12 uk-button uk-button-default">Détails de la commande</a>
                     <a href="" class="col-md-4 col-sm-12 uk-button uk-button-primary">Validez la commande</a>
-                    <a href="" class="col-md-4 col-sm-12 uk-button uk-button-danger">Refusez la commande</a>  
+                    <a href="{% url 'shop:cancel' bucket.pk %}" class="cancel col-md-4 col-sm-12 uk-button uk-button-danger">Refusez la commande</a>  
                 </div>
                 
             </div>
@@ -49,7 +49,7 @@ Liste des commandes
 
     $('#modal').hide()
 
-    $('#buckets-list a').click(e => {
+    $('.details').click(e => {
         e.preventDefault()
         const url = e.target.getAttribute('href')
         $.ajax({

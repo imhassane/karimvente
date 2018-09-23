@@ -7,18 +7,16 @@ from django.shortcuts import reverse
 
 class Product(Base):
 
-    price = models.PositiveSmallIntegerField(default=0)
-    quantity = models.PositiveSmallIntegerField(default=0)
+    price = models.FloatField(default=0.0)
+    quantity = models.FloatField(default=0.0)
 
     # Dimensions du produit
-    width = models.PositiveSmallIntegerField(default=0)
-    length = models.PositiveSmallIntegerField(default=0)
-    height = models.PositiveSmallIntegerField(default=0)
-    ray = models.PositiveSmallIntegerField(default=0)
+    width = models.FloatField(default=0.0)
+    length = models.FloatField(default=0.0)
+    height = models.FloatField(default=0.0)
+    ray = models.FloatField(default=0.0)
 
     # Disponibilité du produit.
-    address = models.CharField(default='', max_length=100)
-    city = models.CharField(default='', max_length=100)
     availability = models.DateField()
 
     # Image du produit.

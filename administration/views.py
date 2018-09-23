@@ -50,12 +50,12 @@ def add_product(request):
         
         datas = form.cleaned_data
 
-        name, price, city = datas['name'], datas['price'], datas['city']
+        name, price = datas['name'], datas['price']
         quantity, availability = datas['quantity'], datas['availability']
         description, pictures = datas['description'], request.FILES.getlist('pictures')
         category = datas['category']
 
-        product = Product(name=name, price=price, city=city, quantity=quantity, \
+        product = Product(name=name, price=price, quantity=quantity, \
                         description=description, availability=availability)
         
         product.slug = slugify(product.name)

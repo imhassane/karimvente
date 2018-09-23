@@ -29,11 +29,6 @@ class ProductForm(forms.Form):
         'placeholder': "Entrez le prix du produit",
     }))
 
-    city = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'uk-input',
-        'placeholder': "Ce produit est dans quel ville ?"
-    }))
-
     quantity = forms.CharField(widget=forms.NumberInput(attrs={
         'class': 'uk-input',
         'placeholder': "Quelle est la quantité du produit en stock ?"

@@ -12,16 +12,22 @@ def add_to_bucket(request, product_pk):
     # On ajoute la clé validated dans la session.
     request.session['validated'] = False
 
+    try:
     
-    product = _g(Product, pk=product_pk)
+        product = _g(Product, pk=product_pk)
 
-    order = Order(product=product)
-    order.save()
+        order = Order(product=product)
+        order.save()
 
-    bucket = request.session['bucket']
-    bucket.append(order.pk)
+        bucket = request.session['bucket']
+        bucket.append(order.pk)
 
-    request.session['bucket'] = bucket
+        request.session['bucket'] = bucket
+    
+    except:
+
+        request.session['bucket'] = []
+        add_to_bucket(request, product_pk)
 
     return JsonResponse({
         'message': "Votre commande a été ajoutée",
@@ -126,11 +132,15 @@ def validate(request, id):
 @auth.user_passes_test(decorators.user_is_admin)
 def cancel(request, id):
 
-    # On récupère la commande
-    order = _g(Order, pk=id)
+    try:
 
-    # On la suppprime
-    #order.delete()
+        # On récupère la commande
+        bucket = _g(Bucket, pk=id)
+
+        # On la suppprime
+        bucket.delete()
+    except:
+        pass
 
     return JsonResponse({"message": "La commande n°%d a été annulée" % id})
 

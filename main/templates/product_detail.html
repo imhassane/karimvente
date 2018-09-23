@@ -10,7 +10,7 @@
 
 
     <div>
-        <h2>{{ product.name }} - [ID: {{ product.pk }}]</h2>
+        <h2>{{ product.name }}</h2>
         <span class="uk-text-meta">Mise à jour le {{ product.updated_at|date:"j N o à H:i" }}</span>
     </div>
 
@@ -26,34 +26,18 @@
             </ul>
             <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
             <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-            <a id="like" class="uk-background-secondary uk-padding uk-margin">
-                <span uk-icon="icon: heart"></span>
-                <span class="uk-hidden-hover">
-                    <span id="like-number">{{ product.like }}</span> apprécie{{ product.like|pluralize:"nt"}}</span>
-            </a>
         
         </div>
 
         <div class="uk-width-1-3@m uk-width-1-1@s uk-margin uk-padding">
 
             <div>
-                <h3>Informations importantes</h3>
+                <h3>Informations</h3>
 
-                <div class="row">
+                <div class="row uk-margin">
                     <div class="col-6">
                         <span class="label">Prix</span>
                         <p>{{ product.price }} €</p>
-                    </div>
-                    <div class="col-6">
-                        <span class="label">Adresse</span>
-                        <p>{{ product.address }}</p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-6">
-                        <span class="label">Ville</span>
-                        <p>{{ product.city }}</p>
                     </div>
                     <div class="col-6">
                         <span class="label">Disponibilité</span>
@@ -71,7 +55,7 @@
                     </p>
                     {% if product.quantity > 0 %}
                     <div>
-                        <a id="add-to-bucket" href="#" class="uk-button uk-button-secondary">Commander ce produit</a>
+                        <a id="add-to-bucket" href="#" class="uk-button uk-button-secondary col-12">Commander ce produit</a>
                     </div>
                     {% endif %}
                 </div>
@@ -107,37 +91,61 @@
 
     <div class="uk-margin uk-padding">
         <h3>Description du produit</h3>
-        <p>
+        <p class="jumbotron">
             {% if product.description != '' %}
                 {{ product.description }}
             {% else %}
                 Aucun commentaire n'a été ajouté pour ce produit
             {% endif %}
         </p>
+
         <div class="uk-margin">
             <h5>Dimensions du produit</h5>
             <p>
                 <span class="uk-label">Note</span>
                 Les mesures données sont exprimées en mètres.
             </p>
+            {% if product.length != 0 or product.width != 0 or product.height != 0 or product.ray != 0 %}
+            
             <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
                 <thead>
                     <tr>
-                        <th>Longeur</th>
-                        <th>Largeur</th>
-                        <th>Hauteur</th>
-                        <th>Rayon</th>
+                        {% if product.length != 0 %}
+                            <th>Longueur</th>
+                        {% endif %}
+                        {% if product.width != 0 %}
+                            <th>Largeur</th>
+                        {% endif %}
+                        {% if product.height != 0 %}
+                            <th>Hauteur</th>
+                        {% endif %}
+                        {% if product.ray != 0 %}
+                            <th>Rayon</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ product.length }}</td>
-                        <td>{{ product.width }}</td>
-                        <td>{{ product.height }}</td>
-                        <td>{{ product.ray }}</td>
+                        {% if product.length != 0 %}
+                            <td>{{ product.length }}</td>
+                        {% endif %}
+                        {% if product.width != 0 %}
+                            <td>{{ product.width }}</td>
+                        {% endif %}
+                        {% if product.height != 0 %}
+                            <td>{{ product.height }}</td>
+                        {% endif %}
+                        {% if product.ray != 0 %}
+                            <td>{{ product.ray }}</td>
+                        {% endif %}
                     </tr>
                 </tbody>
             </table>
+
+            {% else %}
+            <p class="uk-text-info">Les dimensions de ce produi n'ont pas été définies</p>
+            {% endif %}
+
         </div>
     </div>
 
